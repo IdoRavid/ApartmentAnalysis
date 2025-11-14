@@ -1,0 +1,35 @@
+[out:json][timeout:25];
+
+// Define the administrative area of Jerusalem
+area["name:en"="Jerusalem"]["boundary"="administrative"]->.jerusalem;
+
+// Fetch streets (ways and relations) within the Jerusalem area that have both Hebrew and English names
+(
+  way["highway"]["name"]["name:he"](area.jerusalem);
+  relation["highway"]["name"]["name:he"](area.jerusalem);
+);
+
+// Output the result
+out body;
+>;
+out skel qt;
+
+
+# NEIGHBORHOODS
+
+[out:json][timeout:25];
+
+// Define the area by name
+area["name:en"="Jerusalem"]["boundary"="administrative"]->.searchArea;
+
+// Get neighborhoods and suburbs within the area
+(
+  node["place"~"neighbourhood|suburb"](area.searchArea);
+  way["place"~"neighbourhood|suburb"](area.searchArea);
+  relation["place"~"neighbourhood|suburb"](area.searchArea);
+);
+
+// Output results
+out body;
+>;
+out skel qt;
